@@ -9,114 +9,109 @@
 <title>Maratón Valencia 2026 · Sergio</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #F7F6F3; color: #1A1A1A; min-height: 100vh; }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #F2F1EE; color: #1A1A1A; min-height: 100vh; }
+  .header { background: #111; color: white; padding: 48px 16px 10px; position: sticky; top: 0; z-index: 100; }
+  .header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .header-title { font-size: 16px; font-weight: 700; }
+  .header-sub { font-size: 10px; color: #9CA3AF; letter-spacing: 0.4px; margin-top: 1px; }
 
-  /* HEADER */
-  .header { background: #1A1A1A; color: white; padding: 52px 16px 12px; position: sticky; top: 0; z-index: 100; }
-  .header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .header-title { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
-  .header-sub { font-size: 10px; color: #9CA3AF; letter-spacing: 0.5px; margin-top: 1px; }
-  .tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  /* COUNTDOWN */
+  .countdown { background: linear-gradient(135deg, #1e3a5f 0%, #0f2540 100%); margin: 0 16px 0; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+  .cd-icon { font-size: 24px; }
+  .cd-label { font-size: 10px; color: #93C5FD; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .cd-time { font-size: 22px; font-weight: 800; color: white; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+  .cd-sub { font-size: 10px; color: #93C5FD; margin-top: 1px; }
+
+  .tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin-top: 10px; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap; transition: all 0.15s; }
-  .tab.active { background: white; color: #1A1A1A; }
-  .tab.inactive { background: rgba(255,255,255,0.12); color: white; }
-
-  /* SECTIONS */
-  .section { display: none; padding: 0 0 100px; }
+  .tab { padding: 5px 12px; border-radius: 20px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .tab.active { background: white; color: #111; }
+  .tab.inactive { background: rgba(255,255,255,0.13); color: white; }
+  .section { display: none; padding-bottom: 90px; }
   .section.active { display: block; }
-
-  /* DAY SELECTOR */
   .day-scroll { overflow-x: auto; padding: 12px 16px 4px; display: flex; gap: 8px; scrollbar-width: none; }
   .day-scroll::-webkit-scrollbar { display: none; }
-  .day-btn { flex-shrink: 0; padding: 8px 12px; border-radius: 12px; border: 2px solid transparent; background: white; cursor: pointer; text-align: center; min-width: 78px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: all 0.15s; }
+  .day-btn { flex-shrink: 0; padding: 7px 10px; border-radius: 12px; border: 2px solid transparent; background: white; cursor: pointer; text-align: center; min-width: 72px; box-shadow: 0 1px 3px rgba(0,0,0,0.09); }
   .day-btn.active { box-shadow: none; }
-  .day-emoji { font-size: 18px; }
-  .day-label { font-size: 10px; font-weight: 700; margin-top: 2px; }
-  .day-date { font-size: 10px; color: #9CA3AF; }
-
-  /* DAY HEADER */
-  .day-header { margin: 10px 16px 8px; padding: 14px 16px; border-radius: 14px; border-left: 4px solid; }
-  .day-header-emoji { font-size: 22px; }
-  .day-header-title { font-size: 19px; font-weight: 700; margin-top: 2px; }
-  .day-header-date { font-size: 13px; color: #6B7280; }
-
-  /* STEPS */
+  .day-emoji { font-size: 17px; }
+  .day-label { font-size: 9px; font-weight: 700; margin-top: 2px; }
+  .day-date { font-size: 9px; color: #9CA3AF; }
+  .day-header { margin: 8px 16px; padding: 12px 14px; border-radius: 13px; border-left: 4px solid; }
   .steps { padding: 0 16px; display: flex; flex-direction: column; gap: 8px; }
-  .step { background: white; border-radius: 14px; padding: 13px 14px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 2px solid transparent; transition: box-shadow 0.15s; }
-  .step-row { display: flex; gap: 10px; align-items: flex-start; }
-  .step-icon { font-size: 22px; flex-shrink: 0; }
+  .step { background: white; border-radius: 13px; padding: 12px 13px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 2px solid transparent; }
+  .step.run-step { background: #F0FDF4; }
+  .step-row { display: flex; gap: 9px; align-items: flex-start; }
+  .step-icon { font-size: 20px; flex-shrink: 0; }
   .step-body { flex: 1; min-width: 0; }
-  .step-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-  .step-title { font-size: 14px; font-weight: 700; }
-  .step-desc { font-size: 12px; color: #6B7280; margin-top: 1px; }
-  .step-time { font-size: 11px; color: #9CA3AF; flex-shrink: 0; font-weight: 600; }
-  .step-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .step-top { display: flex; justify-content: space-between; gap: 8px; }
+  .step-title { font-size: 13px; font-weight: 700; }
+  .step-desc { font-size: 11px; color: #6B7280; margin-top: 1px; }
+  .step-time { font-size: 10px; color: #9CA3AF; font-weight: 600; flex-shrink: 0; }
+  .step-tags { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; }
   .tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
   .tag-cost { background: #F0FDF4; color: #15803D; }
-  .step-detail { margin-top: 10px; padding-top: 10px; border-top: 1px solid #F3F4F6; font-size: 13px; color: #374151; line-height: 1.6; white-space: pre-line; display: none; }
+  .tag-run { background: #DCFCE7; color: #15803D; }
+  .step-detail { margin-top: 9px; padding-top: 9px; border-top: 1px solid #F3F4F6; font-size: 12px; color: #374151; line-height: 1.65; white-space: pre-line; display: none; }
   .step-detail.open { display: block; }
-  .step-arrow { font-size: 11px; color: #D1D5DB; flex-shrink: 0; margin-top: 3px; }
-
-  /* HOTELS */
-  .cards { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-  .card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
-  .card-name { font-size: 15px; font-weight: 700; margin-top: 4px; }
-  .card-stars { font-size: 12px; color: #F59E0B; margin-top: 2px; }
+  .step-arrow { font-size: 10px; color: #D1D5DB; flex-shrink: 0; margin-top: 3px; }
+  .cards { padding: 16px; display: flex; flex-direction: column; gap: 11px; }
+  .card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
   .card-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px; }
   .badge-green { background: #DCFCE7; color: #15803D; }
   .badge-yellow { background: #FEF3C7; color: #D97706; }
-  .card-info { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .card-info { margin-top: 11px; display: flex; flex-direction: column; gap: 5px; }
   .card-row { font-size: 12px; color: #6B7280; display: flex; gap: 6px; }
-  .card-notes { font-size: 11px; color: #9CA3AF; margin-top: 4px; padding: 8px 10px; background: #F9FAFB; border-radius: 8px; }
-
-  /* FLIGHTS */
-  .flight-card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-  .flight-label { font-size: 11px; font-weight: 800; color: #2563EB; letter-spacing: 1px; }
-  .flight-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+  .card-notes { font-size: 11px; color: #9CA3AF; margin-top: 3px; padding: 7px 9px; background: #F9FAFB; border-radius: 8px; }
+  .flight-card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .flight-row { display: flex; align-items: center; margin-top: 11px; }
   .flight-city { font-size: 22px; font-weight: 800; }
-  .flight-from { font-size: 11px; color: #6B7280; }
-  .flight-dep { font-size: 12px; font-weight: 600; margin-top: 4px; }
-  .flight-mid { text-align: center; padding: 0 8px; }
-  .flight-dur { font-size: 10px; color: #9CA3AF; margin-top: 2px; }
-  .flight-warning { margin-top: 12px; padding: 8px 10px; background: #FFF7ED; border-radius: 8px; font-size: 11px; color: #9A3412; }
-  .info-table { background: white; border-radius: 16px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .flight-from { font-size: 10px; color: #6B7280; }
+  .flight-dep { font-size: 11px; font-weight: 600; margin-top: 3px; }
+  .flight-mid { text-align: center; padding: 0 10px; }
+  .flight-dur { font-size: 10px; color: #9CA3AF; }
+  .flight-warning { margin-top: 10px; padding: 7px 9px; background: #FFF7ED; border-radius: 8px; font-size: 11px; color: #9A3412; }
   .info-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #F9FAFB; font-size: 12px; }
   .info-key { color: #9CA3AF; }
   .info-val { font-weight: 600; text-align: right; }
-
-  /* CHECKLIST */
   .checklist { padding: 16px; }
-  .progress-bar-bg { background: #E5E7EB; border-radius: 8px; height: 6px; margin-bottom: 16px; }
-  .progress-bar-fill { background: #16A34A; border-radius: 8px; height: 6px; transition: width 0.3s; }
-  .check-items { display: flex; flex-direction: column; gap: 8px; }
-  .check-item { display: flex; gap: 10px; align-items: center; background: white; padding: 12px 14px; border-radius: 12px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: opacity 0.15s; }
+  .progress-bar-bg { background: #E5E7EB; border-radius: 8px; height: 5px; margin-bottom: 14px; }
+  .progress-bar-fill { background: #16A34A; border-radius: 8px; height: 5px; transition: width 0.3s; }
+  .check-items { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+  .check-item { display: flex; gap: 9px; align-items: center; background: white; padding: 11px 13px; border-radius: 11px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
   .check-item.done { opacity: 0.55; }
-  .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #D1D5DB; background: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; color: white; font-weight: 700; transition: all 0.15s; }
+  .check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #D1D5DB; background: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; color: white; font-weight: 700; }
   .check-box.checked { border-color: #16A34A; background: #16A34A; }
-  .check-text { font-size: 13px; }
+  .check-text { font-size: 12px; }
   .check-text.struck { text-decoration: line-through; color: #9CA3AF; }
-  .marathon-box { margin-top: 16px; background: #FFF1F2; border-radius: 14px; padding: 14px 16px; border-left: 4px solid #DC2626; }
+  .marathon-box { background: #FFF1F2; border-radius: 13px; padding: 13px 14px; border-left: 4px solid #DC2626; }
   .marathon-title { font-size: 13px; font-weight: 700; color: #DC2626; margin-bottom: 8px; }
   .marathon-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; border-bottom: 1px solid #FEE2E2; }
   .marathon-key { color: #9CA3AF; }
   .marathon-val { font-weight: 600; }
-  .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
-  .checklist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .checklist-count { font-size: 12px; color: #6B7280; }
+  .sec-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-row">
-    <span style="font-size:22px">🏃‍♂️</span>
+    <span style="font-size:20px">🏃‍♂️</span>
     <div>
       <div class="header-title">Maratón Valencia 2026</div>
-      <div class="header-sub">SERGIO MAUREIRA · DORSAL 1208529 · BOX 3:56–4:09</div>
+      <div class="header-sub">SERGIO · DORSAL 1208529 · BOX 3:56–4:09</div>
     </div>
   </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown">
+    <div class="cd-icon">⏳</div>
+    <div>
+      <div class="cd-label">Tiempo hasta ir al aeropuerto</div>
+      <div class="cd-time" id="countdown">Calculando...</div>
+      <div class="cd-sub">Mié 2 Dic · Salir a las 13:00h → Vuelo 16:00h SCL</div>
+    </div>
+  </div>
+
   <div class="tabs">
     <button class="tab active" onclick="switchTab('itinerary',this)">Itinerario</button>
     <button class="tab inactive" onclick="switchTab('hotels',this)">Hoteles</button>
@@ -135,11 +130,11 @@
 <!-- HOTELS -->
 <div class="section" id="sec-hotels">
   <div class="cards">
-    <div class="section-title">🏨 Alojamientos</div>
+    <div class="sec-title">🏨 Alojamientos</div>
     <div class="card">
-      <div class="card-header">
-        <div><div style="font-size:22px">🏛️</div><div class="card-name">ITC Mora by Soho Boutique</div><div class="card-stars">★★</div></div>
-        <span class="card-badge badge-green">✅ Confirmado Booking</span>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div style="font-size:20px">🏛️</div><div style="font-size:14px;font-weight:700;margin-top:3px">ITC Mora by Soho Boutique</div><div style="font-size:12px;color:#F59E0B">★★</div></div>
+        <span class="card-badge badge-green">✅ Confirmado</span>
       </div>
       <div class="card-info">
         <div class="card-row"><span>📅</span><span>Jue 3 → Vie 4 Dic</span></div>
@@ -149,8 +144,8 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header">
-        <div><div style="font-size:22px">🏨</div><div class="card-name">Petit Palace Ruzafa</div><div class="card-stars">★★★</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div style="font-size:20px">🏨</div><div style="font-size:14px;font-weight:700;margin-top:3px">Petit Palace Ruzafa</div><div style="font-size:12px;color:#F59E0B">★★★</div></div>
         <span class="card-badge badge-green">✅ Confirmado</span>
       </div>
       <div class="card-info">
@@ -162,14 +157,14 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header">
-        <div><div style="font-size:22px">🏨</div><div class="card-name">Hotel Madrid (noche 7–8 dic)</div><div class="card-stars">★★</div></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div style="font-size:20px">🏨</div><div style="font-size:14px;font-weight:700;margin-top:3px">Hotel Madrid (7–8 dic)</div><div style="font-size:12px;color:#F59E0B">★★</div></div>
         <span class="card-badge badge-yellow">⏳ Por reservar</span>
       </div>
       <div class="card-info">
         <div class="card-row"><span>📅</span><span>Lun 7 → Mar 8 Dic</span></div>
         <div class="card-row"><span>📍</span><span>Zona Atocha, Madrid</span></div>
-        <div class="card-notes">Opciones: Hotel Mediodia (€44–80, 100m Atocha) · ITC Mora (€64+, balcón Prado)</div>
+        <div class="card-notes">Hotel Mediodia (€44–80, 100m Atocha ⭐4.2) · ITC Mora (€64+, Prado ⭐3.8)</div>
       </div>
     </div>
   </div>
@@ -178,11 +173,11 @@
 <!-- FLIGHTS -->
 <div class="section" id="sec-flights">
   <div class="cards">
-    <div class="section-title">✈️ Vuelos</div>
-    <div style="font-size:12px;color:#9CA3AF;margin-bottom:12px;margin-top:-8px">Reserva: 528685352100 · Check-in: LA0454597KURZ</div>
+    <div class="sec-title">✈️ Vuelos LATAM</div>
+    <div style="font-size:11px;color:#9CA3AF;margin-top:-2px;margin-bottom:4px">Reserva: 528685352100 · Check-in: LA0454597KURZ</div>
     <div class="flight-card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="flight-label">IDA</span>
+        <span style="font-size:10px;font-weight:800;color:#2563EB;letter-spacing:1px">IDA</span>
         <span class="card-badge badge-green">✅ Confirmado</span>
       </div>
       <div class="flight-row">
@@ -194,7 +189,7 @@
     </div>
     <div class="flight-card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="flight-label">VUELTA</span>
+        <span style="font-size:10px;font-weight:800;color:#2563EB;letter-spacing:1px">VUELTA</span>
         <span class="card-badge badge-green">✅ Confirmado</span>
       </div>
       <div class="flight-row">
@@ -204,11 +199,11 @@
       </div>
       <div class="flight-warning">⚠️ Vuelo LA705 · Tarifa sin reembolso · Equipaje por categoría LATAM</div>
     </div>
-    <div class="info-table">
+    <div class="card">
       <div style="font-size:13px;font-weight:700;margin-bottom:8px">📋 Datos de la reserva</div>
       <div class="info-row"><span class="info-key">Operador</span><span class="info-val">LATAM Airlines Group</span></div>
       <div class="info-row"><span class="info-key">Nº Reserva</span><span class="info-val">528685352100</span></div>
-      <div class="info-row"><span class="info-key">Nº eTicket</span><span class="info-val">0452296361147</span></div>
+      <div class="info-row"><span class="info-key">eTicket</span><span class="info-val">0452296361147</span></div>
       <div class="info-row"><span class="info-key">Cod. Check-in</span><span class="info-val">LA0454597KURZ</span></div>
       <div class="info-row"><span class="info-key">Pasaporte</span><span class="info-val">F64278440</span></div>
       <div class="info-row"><span class="info-key">Cambio vuelo</span><span class="info-val">$283.050 CLP penalidad</span></div>
@@ -220,17 +215,17 @@
 <!-- CHECKLIST -->
 <div class="section" id="sec-checklist">
   <div class="checklist">
-    <div class="checklist-header">
-      <div class="section-title" style="margin-bottom:0">✅ Tareas del viaje</div>
-      <div class="checklist-count" id="checkCount">6/12 listas</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="sec-title" style="margin-bottom:0">✅ Tareas del viaje</div>
+      <div style="font-size:12px;color:#6B7280" id="checkCount">6/12</div>
     </div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar" style="width:50%"></div></div>
     <div class="check-items" id="checkItems"></div>
     <div class="marathon-box">
-      <div class="marathon-title">🏅 Maratón Valencia 2026</div>
+      <div class="marathon-title">🏅 Datos del Maratón</div>
       <div class="marathon-row"><span class="marathon-key">Inscripción</span><span class="marathon-val">Nº 1208529</span></div>
-      <div class="marathon-row"><span class="marathon-key">Nombre dorsal</span><span class="marathon-val">Sergio</span></div>
-      <div class="marathon-row"><span class="marathon-key">Box salida</span><span class="marathon-val">3:56:00–4:09:59</span></div>
+      <div class="marathon-row"><span class="marathon-key">Dorsal</span><span class="marathon-val">Sergio</span></div>
+      <div class="marathon-row"><span class="marathon-key">Box</span><span class="marathon-val">3:56:00–4:09:59</span></div>
       <div class="marathon-row"><span class="marathon-key">Club</span><span class="marathon-val">Fitbrain</span></div>
       <div class="marathon-row"><span class="marathon-key">Fecha</span><span class="marathon-val">Dom 6 Dic · 08:30h</span></div>
       <div class="marathon-row"><span class="marathon-key">Salida</span><span class="marathon-val">Plaça de la Marató</span></div>
@@ -242,80 +237,105 @@
 </div>
 
 <script>
+// ── COUNTDOWN ──────────────────────────────────────────────
+function updateCountdown() {
+  // Target: Wed 2 Dec 2026 13:00 Santiago time (Chile Standard = UTC-3)
+  const target = new Date('2026-12-02T13:00:00-03:00');
+  const now = new Date();
+  const diff = target - now;
+  const el = document.getElementById('countdown');
+  if (diff <= 0) { el.textContent = '¡Es hoy! 🏃‍♂️'; return; }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  if (days > 0) {
+    el.textContent = `${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+  } else {
+    el.textContent = `${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+  }
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── DATA ───────────────────────────────────────────────────
 const DAYS = [
   { id:0, date:"Mié 2 Dic", label:"SALIDA", emoji:"✈️", color:"#E8F4FD", accent:"#2563EB",
     steps:[
-      { time:"13:00", icon:"🏠", title:"Salir hacia el aeropuerto", desc:"Arturo Merino Benítez (SCL)", detail:"Llegar 3 horas antes del vuelo.\nLlevar pasaporte F64278440.\nRecuerda el código de check-in: LA0454597KURZ.", cost:null, tag:"⚠️ Obligatorio" },
-      { time:"16:00", icon:"✈️", title:"Vuelo LA708 — LATAM", desc:"SCL → MAD · Directo · 13h", detail:"Código check-in: LA0454597KURZ\nReserva: 528685352100\nEquipaje incluido por categoría LATAM.\nLlegada jueves 3 dic a las 09:00h en Madrid Barajas.", cost:null, tag:"✅ Confirmado" },
+      { time:"13:00", icon:"🏠", title:"Salir al aeropuerto", desc:"Arturo Merino Benítez (SCL)", detail:"Llegar 3 horas antes del vuelo.\nLlevar pasaporte F64278440.\nCódigo check-in: LA0454597KURZ.", cost:null, tag:"⚠️ Obligatorio", run:false },
+      { time:"16:00", icon:"✈️", title:"Vuelo LA708 — LATAM", desc:"SCL → MAD · Directo · 13h", detail:"Código check-in: LA0454597KURZ\nReserva: 528685352100\nEquipaje incluido por categoría LATAM.\nLlegada jue 3 dic a las 09:00h.", cost:null, tag:"✅ Confirmado", run:false },
     ]
   },
   { id:1, date:"Jue 3 Dic", label:"MADRID", emoji:"🏛️", color:"#FEF3C7", accent:"#D97706",
     steps:[
-      { time:"09:00", icon:"🛬", title:"Llegada Aeropuerto Barajas T4", desc:"Madrid Barajas (MAD)", detail:"Pasar inmigración y recoger equipaje.\nComprar Tarjeta Multi (€2,50) en las máquinas del metro.", cost:"€2,50 Tarjeta Multi", tag:null },
-      { time:"09:45", icon:"🚇", title:"Metro al hotel", desc:"T4 Aeropuerto → Banco de España", detail:"Línea 8 (rosa) → transbordo Nuevos Ministerios → Línea 2 (roja) → Banco de España.\n~35 min de trayecto.", cost:"€4,50 (suplemento aeropuerto incluido)", tag:"L8 + L2" },
-      { time:"10:30", icon:"🏨", title:"ITC Mora by Soho Boutique", desc:"Paseo del Prado 32, Madrid", detail:"Check-in desde las 14:00h.\nDeja el equipaje en recepción y sal a explorar.\nTel: +34 914 20 15 69", cost:null, tag:"✅ Confirmado · Sin pago anticipado" },
-      { time:"11:00", icon:"🎨", title:"Mañana libre en Madrid", desc:"Zona Paseo del Arte", detail:"Estás en el mejor punto de Madrid:\n• Prado a 450m\n• Reina Sofía a 450m\n• Thyssen enfrente\nPasea, desayuna, recupera el jet lag.", cost:null, tag:"💡 A pie desde el hotel" },
-      { time:"12:00", icon:"🍽️", title:"Dónde comer cerca", desc:"Opciones a 5 min del hotel", detail:"• El Brillante — bocadillo de calamares — 100m en Plaza Emp. Carlos V\n• Taberna de la Daniela — cocido madrileño — 10 min\n• Estado Puro — tapas modernas Paco Roncero — 8 min\n• Casa Alberto — taberna 1827 — 10 min", cost:"€12–25 por persona", tag:"🍴 Recomendado" },
-      { time:"14:00", icon:"🔑", title:"Check-in ITC Mora", desc:"Habitación disponible", detail:"Balcón con vistas al Paseo del Prado.\nDescansa y prepárate para el día siguiente.", cost:null, tag:null },
-      { time:"16:00", icon:"🎨", title:"Qué hacer esta tarde", desc:"Opciones culturales", detail:"• Museo del Prado — 450m — cierra 20:00h — ~€15\n• Museo Reina Sofía — 450m — Guernica de Picasso — ~€12\n• Parque del Retiro — 10 min caminando — gratis\n• Plaza Mayor + Sol — 15 min caminando — gratis", cost:"€12–15 museos", tag:"🗺️ A pie" },
-      { time:"20:00", icon:"🌙", title:"Cena y descanso", desc:"Barrio de Las Letras", detail:"• La Latina — tabernas tradicionales — 15 min\n• Lhardy — restaurante histórico desde 1839 — 5 min\n• Mercado de San Miguel — 15 min\n\nDuerme bien: mañana hay tren a Valencia.", cost:"€15–30 cena", tag:null },
+      { time:"09:00", icon:"🛬", title:"Llegada Barajas T4", desc:"Madrid (MAD)", detail:"Pasar inmigración y recoger equipaje.\nComprar Tarjeta Multi (€2,50) en las máquinas del metro.", cost:"€2,50 Tarjeta Multi", tag:null, run:false },
+      { time:"09:45", icon:"🚇", title:"Metro al hotel", desc:"T4 → Banco de España · ~35 min", detail:"Línea 8 (rosa) → Nuevos Ministerios → Línea 2 → Banco de España.\n5 min caminando al hotel.", cost:"€4,50 suplemento aeropuerto", tag:"L8 + L2", run:false },
+      { time:"10:30", icon:"🏨", title:"ITC Mora by Soho Boutique", desc:"Paseo del Prado 32, Madrid", detail:"Check-in desde las 14:00h.\nDeja el equipaje en recepción.\nTel: +34 914 20 15 69", cost:null, tag:"✅ Confirmado", run:false },
+      { time:"11:30", icon:"🏃", title:"Easy Run — 25 min", desc:"Parque del Retiro · Madrid", detail:"Rodaje suave de activación tras el vuelo.\nMuy suave, solo para mover las piernas.\n\nRuta sugerida desde el hotel:\nPaseo del Prado → Puerta de Alcalá → Parque del Retiro (da la vuelta al lago) → vuelta.\n\n📍 Retiro a 10 min caminando del hotel.\n⏱ 25 minutos a ritmo conversacional.\n👟 Zapatillas de entrenamiento.", cost:"Gratis", tag:"🏃 Easy Run 25'", run:true },
+      { time:"14:00", icon:"🔑", title:"Check-in ITC Mora", desc:"Balcón con vistas al Prado", detail:"Descansa y date una ducha tras el rodaje.\nMañana: tren a Valencia.", cost:null, tag:null, run:false },
+      { time:"16:00", icon:"🎨", title:"Tarde cultural", desc:"Paseo del Arte", detail:"• Museo del Prado (~€15) — 450m\n• Museo Reina Sofía (~€12) — 450m\n• Parque del Retiro — gratis\n• Plaza Mayor + Sol — gratis", cost:"€12–15", tag:"🗺️ A pie", run:false },
+      { time:"12:00", icon:"🍽️", title:"Dónde comer", desc:"Opciones cerca del hotel", detail:"• El Brillante — bocadillo de calamares — 100m\n• Taberna de la Daniela — cocido madrileño — 10 min\n• Estado Puro (Paco Roncero) — tapas — 8 min\n• Casa Alberto — taberna 1827 — 10 min", cost:"€12–25", tag:"🍴 Recomendado", run:false },
+      { time:"20:00", icon:"🌙", title:"Cena y descanso", desc:"Barrio de Las Letras", detail:"• Lhardy — restaurante histórico 1839 — 5 min\n• Mercado de San Miguel — 15 min\n• La Latina — tabernas — 15 min\nDuerme bien: mañana tren a Valencia.", cost:"€15–30", tag:null, run:false },
     ]
   },
   { id:2, date:"Vie 4 Dic", label:"VALENCIA", emoji:"🚄", color:"#F0FDF4", accent:"#16A34A",
     steps:[
-      { time:"09:00", icon:"🎨", title:"Mañana en Madrid", desc:"Último tramo antes de Valencia", detail:"Visita el Museo Reina Sofía (abre 10:00h, a 2 min del hotel) para ver el Guernica.\nRegresa al hotel, recoge maleta, check-out antes de las 12:00h.", cost:"€12 entrada Reina Sofía", tag:"💡 Aprovecha la mañana" },
-      { time:"12:00", icon:"🚇", title:"Hotel → Estación Chamartín", desc:"ITC Mora → Chamartín", detail:"Metro: Antón Martín (L1) → Chamartín directo.\n~25 min de trayecto.\nLos trenes AVE/Avlo/OUIGO salen desde Chamartín-Clara Campoamor.", cost:"€1,50–2,00", tag:"Línea 1 dirección Chamartín" },
-      { time:"Tarde", icon:"🚄", title:"Tren Madrid → Valencia", desc:"Chamartín → Joaquín Sorolla", detail:"Usa tu código de descuento Renfe 15%.\nSolicitalo en 'Gestiona tu inscripción' en valenciaciudaddelrunning.com.\n\nOpciones:\n• OUIGO desde €9\n• Avlo desde €7\n• AVE desde €29\n~1h 50min de viaje.", cost:"€7–29 (con 15% descuento maratón)", tag:"🎽 Descuento corredor 15%" },
-      { time:"17:00", icon:"🚶", title:"Joaquín Sorolla → Petit Palace", desc:"7 minutos caminando", detail:"La estación AVE está a solo 550m del hotel.\nVe directo caminando con tu maleta — no necesitas metro ni taxi.", cost:"Gratis — 7 min a pie", tag:"💡 7 min a pie" },
-      { time:"17:30", icon:"🏨", title:"Petit Palace Ruzafa", desc:"Carrer de Sueca 14, Valencia", detail:"Check-in desde las 14:00h.\nHabitación individual con desayuno incluido.\nTel: +34 963 513 638\nruzafa@petitpalace.com\nReserva: 528685352100\n\n⚠️ Si llegas después de las 23:59h la reserva se cancela automáticamente.", cost:null, tag:"✅ Confirmado · 3 noches" },
-      { time:"19:00", icon:"🏅", title:"ExpoDeporte — Recoger dorsal", desc:"Feria Valencia — Expo 42K", detail:"Metro desde Bailén (L5) → Alameda + 10 min caminando.\nO taxi ~€8.\n\nRecoge:\n• Dorsal Nº 1208529\n• Chip de cronometraje\n• Camiseta oficial XL\n• Bolsa de la carrera\n• Título GRATUITO 4 viajes Metrovalencia (válido 5–8 dic)", cost:"Taxi: ~€8 · Metro: SUMA 10", tag:"🎽 Imprescindible hoy o mañana" },
-      { time:"21:00", icon:"🍝", title:"Cena en Ruzafa", desc:"El mejor barrio gastronómico de Valencia", detail:"• Canalla Bistro (Ricardo Camarena) — fusión — 5 min\n• Palo Santo — menú degustación — 3 min\n• La Lola — arroces valencianos — 8 min\n• Restaurante Ruzafusa — cocina de mercado — 2 min\n\n🍝 Carga carbohidratos: pasta, arroz, pan.", cost:"€18–35 cena", tag:"🍝 Noche de carbohidratos" },
+      { time:"08:00", icon:"🏃", title:"Easy Run — 25 min", desc:"Parque del Retiro · Madrid", detail:"Último rodaje suave antes de Valencia.\nMuy ligero, para activar las piernas.\n\nRuta: Hotel ITC Mora → Paseo del Prado → Retiro.\n⏱ 25 min a ritmo conversacional.\n\nVuelta al hotel, ducha y desayuno antes del tren.", cost:"Gratis", tag:"🏃 Easy Run 25'", run:true },
+      { time:"09:30", icon:"🎨", title:"Reina Sofía + check-out", desc:"Check-out antes de las 12:00h", detail:"Visita el Reina Sofía (abre 10:00h, a 2 min del hotel).\nVer el Guernica de Picasso.\nCheck-out antes de las 12:00h.", cost:"€12 entrada", tag:"💡 A 2 min del hotel", run:false },
+      { time:"12:00", icon:"🚇", title:"Hotel → Chamartín", desc:"Metro L1 · ~25 min", detail:"Antón Martín (L1) → Chamartín directo.\nTodos los trenes salen desde Chamartín-Clara Campoamor.", cost:"€1,50–2,00", tag:"Línea 1", run:false },
+      { time:"14:00", icon:"🚄", title:"Tren Madrid → Valencia", desc:"Chamartín → Joaquín Sorolla · ~1h 50min", detail:"Solicita código Renfe 15% en:\nvalenciaciudaddelrunning.com → 'Gestiona tu inscripción'\n\n• OUIGO desde €9\n• Avlo desde €7\n• AVE desde €29", cost:"€7–29 (−15% corredor)", tag:"🎽 Descuento 15% Renfe", run:false },
+      { time:"16:30", icon:"🚶", title:"Joaquín Sorolla → Hotel", desc:"7 minutos caminando", detail:"La estación AVE está a 550m del hotel.\nVe directo caminando — sin metro ni taxi.", cost:"Gratis", tag:"💡 7 min a pie", run:false },
+      { time:"17:00", icon:"🏨", title:"Petit Palace Ruzafa", desc:"Carrer de Sueca 14, Valencia", detail:"Check-in desde 14:00h.\nHabitación individual con desayuno.\nTel: +34 963 513 638\nruzafa@petitpalace.com\n\n⚠️ No-show antes de las 23:59h = cancelación automática.", cost:null, tag:"✅ Confirmado · 3 noches", run:false },
+      { time:"19:00", icon:"🏅", title:"Expo 42K — Recoger dorsal", desc:"Feria Valencia", detail:"Metro Bailén (L5) → Alameda + 10 min a pie.\nO taxi ~€8.\n\nRecoge:\n✓ Dorsal Nº 1208529\n✓ Chip cronometraje\n✓ Camiseta oficial XL\n✓ Bolsa de la carrera\n✓ Título 4 viajes GRATUITOS Metrovalencia", cost:"Taxi ~€8", tag:"🎽 Hoy o mañana", run:false },
+      { time:"21:00", icon:"🍝", title:"Cena en Ruzafa", desc:"Carga de carbohidratos", detail:"• Canalla Bistro (Ricardo Camarena) — 5 min\n• Palo Santo — degustación — 3 min\n• La Lola — arroces valencianos — 8 min\n• Ruzafusa — cocina de mercado — 2 min\n\n🍝 Carbohidratos: pasta, arroz, pan.", cost:"€18–35", tag:"🍝 Carbohidratos", run:false },
     ]
   },
   { id:3, date:"Sáb 5 Dic", label:"DESCANSO", emoji:"😴", color:"#F5F3FF", accent:"#7C3AED",
     steps:[
-      { time:"08:00", icon:"🍳", title:"Desayuno en el hotel", desc:"Incluido en tu reserva", detail:"Come bien: hidratos de carbono, proteínas.\nEvita comida nueva o que no hayas probado antes del maratón.", cost:"Incluido", tag:"✅ Incluido" },
-      { time:"09:00", icon:"🏃", title:"Rodaje suave de activación", desc:"Jardín del Turia", detail:"20–30 min muy suave por el Jardín del Turia.\nPasa frente al hotel — es el parque lineal más largo de España.\nRecorre parte del recorrido del maratón para familiarizarte.", cost:"Gratis", tag:"🦵 Solo 20-30 min, muy suave" },
-      { time:"11:00", icon:"🏅", title:"ExpoDeporte (si no fuiste ayer)", desc:"Feria Valencia — Expo 42K", detail:"Último día para recoger el dorsal.\nImprescindible antes del maratón.\nMetro L5 Bailén → Alameda.", cost:"Metro: SUMA 10", tag:"⚠️ Imprescindible" },
-      { time:"13:00", icon:"🍽️", title:"Almuerzo ligero", desc:"Zona Ruzafa", detail:"• Federal Café — desayunos todo el día — 5 min\n• Mercado de Ruzafa — productos frescos — 3 min\n• El Rodamón de Russafa — menú del día — 4 min\n\nOpta por pasta o arroz. Evita grasas y fibra en exceso.", cost:"€10–18", tag:"🍝 Menú pre-maratón" },
-      { time:"16:00", icon:"🌆", title:"Paseo tranquilo por Valencia", desc:"Centro histórico a pie", detail:"• Catedral de Valencia — 10 min del hotel\n• Plaza del Ayuntamiento — corazón de la ciudad\n• Mercado Central — solo a ver, no comer nada raro\n• La Lonja de la Seda — Patrimonio UNESCO\n\nTodo a pie, sin esfuerzo.", cost:"Gratis", tag:"🚶 Sin esfuerzo" },
-      { time:"19:00", icon:"🍝", title:"Pasta party — La noche más importante", desc:"Carga de carbohidratos", detail:"Busca si hay pasta party oficial del maratón en valenciaciudaddelrunning.com\n\nAlternativas cerca:\n• Il Forno di Valencia — pasta italiana — 5 min\n• Trattoria Papagallo — pasta artesanal — 8 min\n\nCome: pasta, arroz, pan.\nBebe: mucha agua. No alcohol.", cost:"€15–25", tag:"🍝 CARGA DE CARBOHIDRATOS" },
-      { time:"21:00", icon:"😴", title:"Preparación y descanso", desc:"Todo listo para mañana", detail:"Prepara esta noche:\n✓ Dorsal Nº 1208529 fijado al polo\n✓ Camiseta XL oficial\n✓ Zapatillas con chip colocado\n✓ Ropa de abrigo para la salida\n✓ Geles energéticos y sales\n✓ Teléfono cargado al 100%\n✓ Alarma a las 06:00h\n\n⚠️ Duerme antes de las 22:00h.", cost:null, tag:"⚠️ A dormir temprano" },
+      { time:"08:00", icon:"🍳", title:"Desayuno en el hotel", desc:"Incluido en tu reserva", detail:"Come bien: hidratos + proteínas.\nEvita comida nueva antes del maratón.", cost:"Incluido ✅", tag:"✅ Incluido", run:false },
+      { time:"09:00", icon:"🏃", title:"Rodaje suave de activación", desc:"Jardín del Turia · 20–30 min", detail:"Rodaje muy suave por el Jardín del Turia.\nPasa frente al hotel — parque lineal más largo de España.\nRecorre parte del recorrido del maratón.", cost:"Gratis", tag:"🦵 Solo 20-30 min", run:true },
+      { time:"11:00", icon:"🏅", title:"Expo 42K (si no fuiste ayer)", desc:"Feria Valencia — Imprescindible", detail:"Último día para recoger el dorsal.\nMetro L5 Bailén → Alameda.", cost:"Metro SUMA 10", tag:"⚠️ Imprescindible", run:false },
+      { time:"13:00", icon:"🍽️", title:"Almuerzo ligero", desc:"Zona Ruzafa", detail:"• Federal Café — todo el día — 5 min\n• Mercado de Ruzafa — 3 min\n• El Rodamón de Russafa — menú del día\n\nOpta por pasta o arroz.", cost:"€10–18", tag:"🍝 Pre-maratón", run:false },
+      { time:"16:00", icon:"🌆", title:"Paseo tranquilo", desc:"Centro histórico a pie", detail:"• Catedral de Valencia — 10 min\n• Plaza del Ayuntamiento\n• Mercado Central — solo a ver\n• La Lonja de la Seda — UNESCO\nTodo a pie, sin esfuerzo.", cost:"Gratis", tag:"🚶 Sin esfuerzo", run:false },
+      { time:"19:00", icon:"🍝", title:"Pasta party — Noche clave", desc:"Carga máxima de carbohidratos", detail:"Consulta pasta party oficial en valenciaciudaddelrunning.com\n\n• Il Forno di Valencia — 5 min\n• Trattoria Papagallo — 8 min\n\nCome: pasta, arroz, pan.\nBebe: mucha agua. NO alcohol.", cost:"€15–25", tag:"🍝 CARGA MÁXIMA", run:false },
+      { time:"21:00", icon:"😴", title:"Preparación y a dormir", desc:"Todo listo para mañana", detail:"✓ Dorsal 1208529 fijado al polo\n✓ Camiseta XL oficial\n✓ Zapatillas con chip\n✓ Ropa de abrigo para la salida\n✓ Geles y sales\n✓ Teléfono al 100%\n✓ Alarma 06:00h\n\n⚠️ En cama antes de las 22:00h.", cost:null, tag:"⚠️ Dormir temprano", run:false },
     ]
   },
   { id:4, date:"Dom 6 Dic", label:"¡MARATÓN!", emoji:"🏃‍♂️", color:"#FFF1F2", accent:"#DC2626",
     steps:[
-      { time:"06:00", icon:"⏰", title:"Despertar — El gran día", desc:"Desayuno ligero y preparación", detail:"Desayuno ligero: plátano, tostadas, café.\nLo que siempre comes antes de entrenar — sin experimentar.\nViste el dorsal y coloca el chip.\nHidratación constante desde ya.", cost:null, tag:"☀️ El gran día" },
-      { time:"07:00", icon:"🚶", title:"Hotel → Largada del maratón", desc:"Petit Palace → Plaça de la Marató", detail:"Camina ~17 min por el Jardín del Turia — es tu calentamiento natural.\nRecorrido: Carrer de Sueca → Jardín del Turia → Plaça de la Marató.\n\nEl metro también opera desde las 06:00h con servicio reforzado.\n4 viajes gratis con tu título de Metrovalencia.", cost:"Gratis (a pie o metro corredor)", tag:"🏃 17 min caminando" },
-      { time:"07:30", icon:"🎽", title:"Llegada a la zona de salida", desc:"Plaça de la Marató — Busca tu Box", detail:"Box: 3:56:00–4:09:59\nEntrega de ropa si aplica.\nÚltimos estiramientos.\nHidratación final.\n\nEl ambiente del Maratón de Valencia es electrizante — disfruta cada segundo.", cost:null, tag:"📦 Box 3:56–4:09" },
-      { time:"08:30", icon:"🏁", title:"¡SALIDA!", desc:"42,195 km · Circuito llano · 12–17°C", detail:"Recorrido completamente llano, a nivel del mar.\nPasa por el centro histórico, el Jardín del Turia y termina en la Ciudad de las Artes y las Ciencias.\nAvituallamientos cada 5 km aprox.\nLiebres para pace ~4:00h.\nApp oficial de tracking activada.", cost:null, tag:"🏅 ¡A por ello, Sergio!" },
-      { time:"12:30", icon:"🏅", title:"META — ¡FINISHER!", desc:"Ciudad de las Artes y las Ciencias", detail:"Recoge:\n• Medalla finisher\n• Bolsa de avituallamiento\n• Camiseta finisher\n\nZona de recuperación con masajes disponibles.\nBúscate una manta — el frío post-carrera baja rápido en diciembre.", cost:null, tag:"🥇 ¡FINISHER!" },
-      { time:"13:30", icon:"🚇", title:"Meta → Hotel", desc:"Ciudad Artes → Petit Palace Ruzafa", detail:"Línea 5 metro: Alameda → Bailén (2 paradas).\nO taxi/Cabify ~€6–8.\n\n💡 Taxi recomendado — el metro estará lleno de corredores y con las piernas destrozadas el taxi es mucho más cómodo.", cost:"Metro: gratis (título corredor) · Taxi: ~€6–8", tag:"🦵 Taxi recomendado" },
-      { time:"15:00", icon:"🛁", title:"Recuperación en el hotel", desc:"Baño, descanso, celebración", detail:"Baño con agua fría en las piernas.\nHidratación con electrolitos.\nCome proteínas: pollo, huevos, legumbres.\n\nSube tus tiempos a Strava y celebra en redes.\n¡Te lo mereces!", cost:null, tag:"💪 Lo lograste" },
-      { time:"20:00", icon:"🥂", title:"Cena de celebración", desc:"Ruzafa — ¡Te lo has ganado!", detail:"• Canalla Bistro — experiencia gastronómica — 5 min\n• La Pepica — arroces frente al mar — 20 min taxi\n• Cervecería Maipi — ambiente festivo post-maratón — 3 min\n\n¡Esta noche sí mereces capricharte!", cost:"€25–50", tag:"🎉 ¡Celebración!" },
+      { time:"06:00", icon:"⏰", title:"Despertar — El gran día", desc:"Desayuno ligero y preparación", detail:"Desayuno: plátano, tostadas, café.\nLo que siempre comes antes de entrenar.\nViste el dorsal y coloca el chip.", cost:null, tag:"☀️ El gran día", run:false },
+      { time:"07:00", icon:"🚶", title:"Hotel → Largada", desc:"Petit Palace → Plaça de la Marató · 17 min", detail:"Camina por el Jardín del Turia — es tu calentamiento.\nRuta: Carrer de Sueca → Jardín Turia → Plaça Marató.\n\nMetro reforzado desde 06:00h.\n4 viajes gratis con tu título Metrovalencia.", cost:"Gratis", tag:"🏃 17 min caminando", run:false },
+      { time:"07:30", icon:"🎽", title:"Llegada a la zona de salida", desc:"Box 3:56:00–4:09:59", detail:"Últimos estiramientos y strides.\nHidratación final.\n\nEl ambiente del Maratón de Valencia es electrizante.", cost:null, tag:"📦 Box 3:56–4:09", run:false },
+      { time:"08:30", icon:"🏁", title:"¡SALIDA!", desc:"42,195 km · Llano · 12–17°C", detail:"Circuito completamente llano, a nivel del mar.\nAvituallamientos cada 5 km.\nLiebres para pace ~4:00h.", cost:null, tag:"🏅 ¡A por ello, Sergio!", run:false },
+      { time:"12:30", icon:"🏅", title:"META — ¡FINISHER!", desc:"Ciudad de las Artes y las Ciencias", detail:"Recoge:\n• Medalla finisher 🏅\n• Bolsa de avituallamiento\n• Camiseta finisher\n\nZona de recuperación con masajes.", cost:null, tag:"🥇 ¡FINISHER!", run:false },
+      { time:"13:30", icon:"🚕", title:"Meta → Hotel", desc:"Ciudad Artes → Petit Palace", detail:"Taxi/Cabify: ~€6–8 · MUY recomendable.\nMetro L5 Alameda → Bailén (gratis con título corredor).", cost:"Taxi ~€6–8", tag:"🦵 Taxi recomendado", run:false },
+      { time:"15:00", icon:"🛁", title:"Recuperación en el hotel", desc:"Baño frío, descanso, proteínas", detail:"Baño con agua fría en las piernas.\nHidratación con electrolitos.\nCome proteínas: pollo, huevos, legumbres.", cost:null, tag:"💪 Lo lograste", run:false },
+      { time:"20:00", icon:"🥂", title:"Cena de celebración", desc:"¡Te lo has ganado!", detail:"• Canalla Bistro — 5 min\n• La Pepica — arroces frente al mar — taxi\n• Cervecería Maipi — festivo — 3 min\n\n¡Esta noche sí mereces capricharte! 🎉", cost:"€25–50", tag:"🎉 ¡Celebración!", run:false },
     ]
   },
   { id:5, date:"Lun 7 Dic", label:"REGRESO MAD", emoji:"🚄", color:"#FFF7ED", accent:"#EA580C",
     steps:[
-      { time:"08:30", icon:"🍳", title:"Último desayuno en Petit Palace", desc:"Incluido en la reserva", detail:"Desayuno tranquilo — último en Valencia.\nCome bien para recuperar energías post-maratón.\nCheck-out antes de las 12:00h.", cost:"Incluido", tag:"✅ Incluido" },
-      { time:"10:00", icon:"🌊", title:"Última mañana en Valencia", desc:"Paseo de recuperación (opcional)", detail:"Si las piernas aguantan:\n• Playa de la Malvarrosa — 15 min en taxi (~€8)\n• Barrio del Carmen — 15 min caminando\n• Ciudad de las Artes — visita la meta donde llegaste ayer\n\nAlternativa: quédate en el hotel descansando.", cost:"Taxi playa: ~€8", tag:"🦵 Opcional" },
-      { time:"12:00", icon:"🏨", title:"Check-out Petit Palace Ruzafa", desc:"Pago en recepción", detail:"Check-out antes de las 12:00h.\nEl hotel guarda el equipaje si necesitas unas horas más.\nPaga en recepción (reserva sin pago anticipado).\n\nContacto: +34 963 513 638", cost:"$1.410.091 CLP (con desayuno)", tag:"💳 Pago al salir" },
-      { time:"14:00", icon:"🚄", title:"Tren Valencia → Madrid", desc:"Joaquín Sorolla → Chamartín", detail:"Joaquín Sorolla está a 7 min caminando del hotel.\nUsa tu código de descuento Renfe 15% corredor.\n~1h 50min de viaje.", cost:"€7–29 (con 15% descuento maratón)", tag:"🎽 Descuento corredor 15%" },
-      { time:"16:00", icon:"🏨", title:"Check-in hotel Madrid", desc:"Noche previa al vuelo de regreso", detail:"Pendiente reservar — zona Atocha/Paseo del Prado.\n\nOpciones:\n• Hotel Mediodia — €44–80 — 100m de Atocha ⭐4.2\n• ITC Mora (misma cadena) — €64+ — balcón Prado ⭐3.8", cost:"€44–80 est.", tag:"⏳ Por reservar" },
-      { time:"19:00", icon:"🍽️", title:"Última cena en Madrid", desc:"Barrio de Las Letras", detail:"• Casa Lucio — huevos rotos, ícono de Madrid — 15 min\n• El Landó — cocina de temporada — 10 min\n• Taberna del Alabardero — 10 min\n• Mercado de San Miguel — picoteo variado — 15 min", cost:"€20–35", tag:"🌙 Última noche" },
+      { time:"08:30", icon:"🍳", title:"Último desayuno en Valencia", desc:"Incluido · Check-out antes de 12:00h", detail:"Come bien para recuperar post-maratón.", cost:"Incluido ✅", tag:"✅ Incluido", run:false },
+      { time:"09:30", icon:"🏃", title:"Easy Run — 25 min (opcional)", desc:"Jardín del Turia · Recuperación activa", detail:"Solo si las piernas lo permiten — no te fuerces.\nRodaje muy suave de recuperación activa.\n\nRuta: Carrer de Sueca → Jardín del Turia (20 min ida/vuelta).\n⏱ 25 min muy suave, ritmo conversacional.\n\nSi las piernas están muy cargadas, descansa y pasea.", cost:"Gratis", tag:"🏃 Easy Run 25' (opcional)", run:true },
+      { time:"10:30", icon:"🌊", title:"Última mañana en Valencia", desc:"Opcional según piernas", detail:"• Playa de la Malvarrosa — taxi ~€8\n• Barrio del Carmen — 15 min caminando\n• Ciudad de las Artes — visita la meta de ayer", cost:"Taxi ~€8", tag:"🦵 Opcional", run:false },
+      { time:"12:00", icon:"🏨", title:"Check-out Petit Palace", desc:"Pago en recepción al salir", detail:"El hotel guarda el equipaje si necesitas más tiempo.\nTel: +34 963 513 638", cost:"$1.410.091 CLP con desayuno", tag:"💳 Pago al salir", run:false },
+      { time:"14:00", icon:"🚄", title:"Tren Valencia → Madrid", desc:"Joaquín Sorolla → Chamartín · ~1h 50min", detail:"7 min caminando al tren desde el hotel.\nUsa tu descuento Renfe 15%.", cost:"€7–29 (−15% corredor)", tag:"🎽 Descuento 15%", run:false },
+      { time:"16:00", icon:"🏨", title:"Check-in hotel Madrid", desc:"Noche previa al vuelo", detail:"Pendiente reservar — zona Atocha.\n• Hotel Mediodia — €44–80 — 100m Atocha\n• ITC Mora — €64+", cost:"€44–80", tag:"⏳ Por reservar", run:false },
+      { time:"20:00", icon:"🍽️", title:"Última cena en Madrid", desc:"Barrio de Las Letras", detail:"• Casa Lucio — huevos rotos — 15 min\n• El Landó — cocina temporada — 10 min\n• Mercado de San Miguel — 15 min", cost:"€20–35", tag:"🌙 Última noche", run:false },
     ]
   },
   { id:6, date:"Mar 8 Dic", label:"VUELTA CASA", emoji:"🏠", color:"#F0F9FF", accent:"#0369A1",
     steps:[
-      { time:"Todo el día", icon:"🌆", title:"Día libre en Madrid", desc:"Último día en España", detail:"Tienes el vuelo a las 23:35h — un día entero:\n• Gran Vía y Callao — compras\n• Parque del Retiro — paseo relajado\n• Museo Thyssen — arte europeo\n• Malasaña o Chueca — ambiente y cafés\n• Rastro (solo domingos) — mercadillo histórico", cost:null, tag:"🗺️ Día tuyo" },
-      { time:"20:00", icon:"🚇", title:"Hotel → Aeropuerto Barajas T4", desc:"Para coger el vuelo de vuelta", detail:"Desde Atocha:\nMetro L1 → Chamartín → L10 → T4 Aeropuerto.\n~45 min en metro.\n\nO taxi directo desde el hotel: ~€25–35, 30–40 min.\nSalir con tiempo — llevar 3h antes del vuelo.", cost:"Metro: ~€4,50 · Taxi: ~€30", tag:"⏰ Salir a las 20:00h" },
-      { time:"20:35", icon:"🏛️", title:"Llegada Aeropuerto T4", desc:"Check-in vuelo LA705", detail:"Código check-in: LA0454597KURZ\nLlegar 3 horas antes — 20:35h para vuelo 23:35h.\nTerminal 4 de Barajas.\nEquipaje incluido por categoría LATAM.", cost:null, tag:"⚠️ 3h antes del vuelo" },
-      { time:"23:35", icon:"✈️", title:"Vuelo LA705 — LATAM", desc:"MAD → SCL · Directo · 12h 55min", detail:"Reserva: 528685352100\nLlegada miércoles 9 de diciembre a las 08:30h en Santiago.\n\n¡Vuelta a casa con la medalla de finisher del Maratón de Valencia en la maleta! 🏅", cost:null, tag:"🏅 Con medalla de finisher" },
+      { time:"08:00", icon:"🏃", title:"Easy Run — 25 min", desc:"Parque del Retiro · Madrid", detail:"Último rodaje del viaje — despídete de Madrid con las zapatillas puestas.\nMuy suave, ritmo regenerativo.\n\nRuta: hotel → Paseo del Prado → Retiro (lago) → vuelta.\n⏱ 25 min fáciles.\n\nDucha y desayuno antes de explorar el día.", cost:"Gratis", tag:"🏃 Easy Run 25'", run:true },
+      { time:"Todo el día", icon:"🌆", title:"Día libre en Madrid", desc:"Último día en España", detail:"Vuelo a las 23:35h — tienes el día entero:\n• Gran Vía y Callao — compras\n• Parque del Retiro — paseo\n• Museo Thyssen\n• Malasaña o Chueca — cafés", cost:null, tag:"🗺️ Día tuyo", run:false },
+      { time:"20:00", icon:"🚇", title:"Hotel → Aeropuerto T4", desc:"Salir a las 20:00h — 3h antes del vuelo", detail:"Metro: Atocha (L1) → Chamartín → L10 → T4\n~45 min · €4,50\n\nO taxi directo: ~€25–35, 30–40 min.", cost:"Metro €4,50 · Taxi ~€30", tag:"⏰ Salir 20:00h", run:false },
+      { time:"20:35", icon:"🛫", title:"Llegada T4 Barajas", desc:"Check-in LA705", detail:"Código: LA0454597KURZ · Reserva: 528685352100\nTerminal 4 · Equipaje por categoría LATAM.", cost:null, tag:"⚠️ 3h antes", run:false },
+      { time:"23:35", icon:"✈️", title:"Vuelo LA705 — LATAM", desc:"MAD → SCL · Directo · 12h 55min", detail:"Llegada mié 9 dic 08:30h en Santiago.\n🏅 Vuelta a casa con la medalla de finisher.", cost:null, tag:"🏅 Con medalla", run:false },
     ]
   },
-  { id:7, date:"Mié 9 Dic", label:"SANTIAGO", emoji:"🇨🇱", color:"#F0FDF4", accent:"#15803D",
+  { id:7, date:"Mié 9 Dic", label:"SANTIAGO 🇨🇱", emoji:"🇨🇱", color:"#F0FDF4", accent:"#15803D",
     steps:[
-      { time:"08:30", icon:"🛬", title:"Llegada Aeropuerto AMB", desc:"Santiago de Chile (SCL)", detail:"Aeropuerto Arturo Merino Benítez.\n\nBienvenido a casa, Sergio.\n¡Eres oficialmente un FINISHER del Maratón de Valencia Trinidad Alfonso 2026! 🏅🎉", cost:null, tag:"🏠 Casa dulce casa" },
+      { time:"08:30", icon:"🛬", title:"Llegada Aeropuerto AMB", desc:"Santiago de Chile (SCL)", detail:"Aeropuerto Arturo Merino Benítez.\n\nBienvenido a casa, Sergio.\n¡FINISHER del Maratón de Valencia Trinidad Alfonso 2026! 🏅🎉", cost:null, tag:"🏠 Casa dulce casa", run:false },
     ]
   },
 ];
@@ -327,33 +347,33 @@ const CHECKLIST = [
   { done:true,  text:"🏨 Petit Palace Ruzafa confirmado (4–7 dic)" },
   { done:true,  text:"🏅 Inscripción maratón confirmada (Nº 1208529)" },
   { done:true,  text:"❌ SLEEP'N Valencia cancelado · €253,47 reembolsados" },
-  { done:false, text:"🚄 Reservar tren Madrid → Valencia (vie 4 dic tarde)" },
-  { done:false, text:"🚄 Reservar tren Valencia → Madrid (lun 7 dic tarde)" },
-  { done:false, text:"🎟️ Solicitar código Renfe 15% en valenciaciudaddelrunning.com" },
+  { done:false, text:"🚄 Reservar tren Madrid → Valencia (vie 4 dic)" },
+  { done:false, text:"🚄 Reservar tren Valencia → Madrid (lun 7 dic)" },
+  { done:false, text:"🎟️ Código Renfe 15% en valenciaciudaddelrunning.com" },
   { done:false, text:"🏨 Reservar hotel Madrid noche 7–8 dic" },
   { done:false, text:"🌍 Tramitar ESTA (autorización entrada Europa)" },
-  { done:false, text:"🛡️ Contratar seguro de viaje con cobertura deportiva" },
+  { done:false, text:"🛡️ Seguro de viaje con cobertura deportiva" },
 ];
 
 let activeDay = 0;
-let checklist = JSON.parse(localStorage.getItem('checklist') || 'null') || CHECKLIST.map(c => ({...c}));
+let checklist = JSON.parse(localStorage.getItem('vchecklist') || 'null') || CHECKLIST.map(c=>({...c}));
 
 function switchTab(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.classList.add('inactive'); });
-  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.classList.add('inactive');});
+  document.getElementById('sec-'+id).classList.add('active');
   btn.classList.add('active'); btn.classList.remove('inactive');
 }
 
 function renderDays() {
   const scroll = document.getElementById('dayScroll');
   scroll.innerHTML = '';
-  DAYS.forEach((d, i) => {
+  DAYS.forEach((d,i) => {
     const btn = document.createElement('button');
-    btn.className = 'day-btn' + (i === activeDay ? ' active' : '');
-    if (i === activeDay) { btn.style.borderColor = d.accent; btn.style.background = d.color; }
+    btn.className = 'day-btn'+(i===activeDay?' active':'');
+    if(i===activeDay){btn.style.borderColor=d.accent;btn.style.background=d.color;}
     btn.innerHTML = `<div class="day-emoji">${d.emoji}</div><div class="day-label" style="color:${i===activeDay?d.accent:'#6B7280'}">${d.label}</div><div class="day-date">${d.date}</div>`;
-    btn.onclick = () => { activeDay = i; renderDays(); renderSteps(); };
+    btn.onclick = ()=>{ activeDay=i; renderDays(); renderSteps(); };
     scroll.appendChild(btn);
   });
 }
@@ -363,13 +383,12 @@ function renderSteps() {
   const header = document.getElementById('dayHeader');
   header.style.background = day.color;
   header.style.borderLeftColor = day.accent;
-  header.innerHTML = `<div class="day-header-emoji">${day.emoji}</div><div class="day-header-title" style="color:${day.accent}">${day.label}</div><div class="day-header-date">${day.date}</div>`;
-
+  header.innerHTML = `<div style="font-size:20px">${day.emoji}</div><div style="font-size:17px;font-weight:700;color:${day.accent};margin-top:2px">${day.label}</div><div style="font-size:12px;color:#6B7280">${day.date}</div>`;
   const container = document.getElementById('stepsContainer');
   container.innerHTML = '';
-  day.steps.forEach((step, i) => {
+  day.steps.forEach((step,i) => {
     const div = document.createElement('div');
-    div.className = 'step';
+    div.className = 'step'+(step.run?' run-step':'');
     div.innerHTML = `
       <div class="step-row">
         <div class="step-icon">${step.icon}</div>
@@ -379,19 +398,19 @@ function renderSteps() {
             <div class="step-time">${step.time}</div>
           </div>
           <div class="step-tags">
-            ${step.tag ? `<span class="tag" style="background:${day.color};color:${day.accent}">${step.tag}</span>` : ''}
-            ${step.cost ? `<span class="tag tag-cost">💰 ${step.cost}</span>` : ''}
+            ${step.tag?`<span class="tag${step.run?' tag-run':''}" style="${step.run?'':'background:'+day.color+';color:'+day.accent}">${step.tag}</span>`:''}
+            ${step.cost?`<span class="tag tag-cost">💰 ${step.cost}</span>`:''}
           </div>
           <div class="step-detail" id="detail-${i}">${step.detail}</div>
         </div>
         <div class="step-arrow" id="arrow-${i}">▼</div>
       </div>`;
-    div.onclick = () => {
-      const detail = document.getElementById('detail-' + i);
-      const arrow = document.getElementById('arrow-' + i);
-      const open = detail.classList.toggle('open');
-      arrow.textContent = open ? '▲' : '▼';
-      div.style.boxShadow = open ? `0 0 0 2px ${day.accent}` : '0 1px 4px rgba(0,0,0,0.07)';
+    div.onclick = ()=>{
+      const det = document.getElementById('detail-'+i);
+      const arr = document.getElementById('arrow-'+i);
+      const open = det.classList.toggle('open');
+      arr.textContent = open?'▲':'▼';
+      div.style.borderColor = open?day.accent:'transparent';
     };
     container.appendChild(div);
   });
@@ -400,23 +419,16 @@ function renderSteps() {
 function renderChecklist() {
   const container = document.getElementById('checkItems');
   container.innerHTML = '';
-  const done = checklist.filter(c => c.done).length;
+  const done = checklist.filter(c=>c.done).length;
   const total = checklist.length;
-  document.getElementById('checkCount').textContent = `${done}/${total} listas`;
+  document.getElementById('checkCount').textContent = `${done}/${total}`;
   document.getElementById('tab-checklist').textContent = `Tareas ${done}/${total}`;
   document.getElementById('progressBar').style.width = `${(done/total)*100}%`;
-
-  checklist.forEach((item, i) => {
+  checklist.forEach((item,i) => {
     const div = document.createElement('div');
-    div.className = 'check-item' + (item.done ? ' done' : '');
-    div.innerHTML = `
-      <div class="check-box${item.done ? ' checked' : ''}">${item.done ? '✓' : ''}</div>
-      <span class="check-text${item.done ? ' struck' : ''}">${item.text}</span>`;
-    div.onclick = () => {
-      checklist[i].done = !checklist[i].done;
-      localStorage.setItem('checklist', JSON.stringify(checklist));
-      renderChecklist();
-    };
+    div.className = 'check-item'+(item.done?' done':'');
+    div.innerHTML = `<div class="check-box${item.done?' checked':''}">${item.done?'✓':''}</div><span class="check-text${item.done?' struck':''}">${item.text}</span>`;
+    div.onclick = ()=>{ checklist[i].done=!checklist[i].done; localStorage.setItem('vchecklist',JSON.stringify(checklist)); renderChecklist(); };
     container.appendChild(div);
   });
 }
